@@ -1,36 +1,27 @@
-package HackerRank.weekly_2014july.ACMTeam;
+package HackerRank.weekly_2014july.CosecSubSeq;
+//for small test case solution: n^2
 import java.util.*;
 import java.io.*;
-
 public class Solution implements Runnable {
-		
 	public void solve() throws IOException {
-		int N = nextInt();
-                int M = nextInt();
-                char[][] a = new char[N][M];
-                for(int i = 0; i < N; i++)
-                    a[i] = nextToken().toCharArray();
-                
-                int cnt = 0;
-                int maxTopics = 0;
-                for(int i = 0; i < N; i++)
-                    for(int j = i + 1; j < N; j++){
-                        int curTopics = 0;
-                        for(int k = 0; k < M; k++){
-                            if(a[i][k] == '1' || a[j][k] == '1') curTopics++;
-                        }
-                        if(curTopics > maxTopics){
-                            maxTopics = curTopics;
-                            cnt = 1;
-                        }
-                        else if(curTopics == maxTopics){
-                            cnt++;
-                        }
-                    }
-                
-                System.out.println(maxTopics + "\n" + cnt);
+		int T = nextInt();
+                for(int t  = 0; t < T; t++){
+                    int N = nextInt(); int K = nextInt();
+                    
+                    int[] a = new int[N];
+                    for(int i = 0; i < N; i++) a[i] = nextInt();
+                    long[] sum = new long[N+1];
+                    for(int i = 1; i <= N; i++) sum[i] = sum[i-1] + a[i-1];
+                    
+                    long answer = 0;
+                    for(int s = 1; s <= N; s++)
+                        for(int e = s; e <= N; e++)
+                            if((sum[e] - sum[s - 1]) % K == 0) answer++;
+                    
+                    
+                    System.out.println(answer);
+                }
 	}
-
 	
 	
 	
