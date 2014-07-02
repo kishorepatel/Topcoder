@@ -2,10 +2,29 @@ import java.util.*;
 
 public class WakingUp {
    public int maxSleepiness(int[] period, int[] start, int[] volume, int D) {
-		
+       int lcm = 1;
+       for(int x : period){
+           lcm = lcm * (x / gcd(lcm, x));
+       }
+       
+       int sleep = 0;
+       int minSleep = 0;
+       for(int i = 1; i <= lcm; i++){
+           sleep += D;
+           for(int k = 0; k < period.length; k++){
+               if(i%period[k] == start[k]%period[k])
+                   sleep -= volume[k];
+           }
+           minSleep = Math.min(minSleep, sleep);
+       }
+       
+       return (sleep < 0)? -1 : - minSleep;
    }
-
-
+   
+private int gcd(int m , int n){
+    if(n == 0) return m;
+    return gcd(n, m%n);
+}
 
 
 
