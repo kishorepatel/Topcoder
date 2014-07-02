@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class FixedDiceGameDiv1 {
+
    public double getExpectation(int a, int b, int c, int d) {
 		
    }
