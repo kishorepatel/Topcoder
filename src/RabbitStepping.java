@@ -1,9 +1,19 @@
 import java.util.*;
 
-public class FixedDiceGameDiv1 {
-
-   public double getExpectation(int a, int b, int c, int d) {
-		
+public class RabbitStepping {
+   public double getExpected(String field, int r) {
+	int N = field.length();
+        int total = 0;
+        int rabbit = 0;
+        for(int i = 1; i < (1 << N); i++){
+            if(Integer.bitCount(i) == r){
+                rabbit += Integer.bitCount(i & 0x55555) % 2;
+                rabbit += Integer.bitCount(i & 0xaaaaa) % 2;
+                total++;
+            }
+        }
+        
+        return 1.0 * rabbit / total;
    }
 
 
@@ -23,17 +33,17 @@ public class FixedDiceGameDiv1 {
 // BEGIN CUT HERE
    public static void main(String[] args) {
 		if (args.length == 0) {
-			FixedDiceGameDiv1Harness.run_test(-1);
+			RabbitSteppingHarness.run_test(-1);
 		} else {
 			for (int i=0; i<args.length; ++i)
-				FixedDiceGameDiv1Harness.run_test(Integer.valueOf(args[i]));
+				RabbitSteppingHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
 // END CUT HERE
 }
 
 // BEGIN CUT HERE
-class FixedDiceGameDiv1Harness {
+class RabbitSteppingHarness {
 	public static void run_test(int casenum) {
 		if (casenum != -1) {
 			if (runTestCase(casenum) == -1)
@@ -88,79 +98,63 @@ class FixedDiceGameDiv1Harness {
 	static int runTestCase(int casenum__) {
 		switch(casenum__) {
 		case 0: {
-			int a                     = 1;
-			int b                     = 2;
-			int c                     = 1;
-			int d                     = 5;
-			double expected__         = 2.0;
+			String field              = "WRBRW";
+			int r                     = 4;
+			double expected__         = 0.8;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}
 		case 1: {
-			int a                     = 3;
-			int b                     = 1;
-			int c                     = 1;
-			int d                     = 3;
-			double expected__         = 3.0;
+			String field              = "WWB";
+			int r                     = 2;
+			double expected__         = 1.3333333333333333;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}
 		case 2: {
-			int a                     = 1;
-			int b                     = 5;
-			int c                     = 1;
-			int d                     = 1;
-			double expected__         = 3.4999999999999996;
+			String field              = "WW";
+			int r                     = 1;
+			double expected__         = 1.0;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}
 		case 3: {
-			int a                     = 2;
-			int b                     = 6;
-			int c                     = 50;
-			int d                     = 30;
-			double expected__         = -1.0;
+			String field              = "BBBBBBBBBB";
+			int r                     = 4;
+			double expected__         = 0.9523809523809523;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}
 		case 4: {
-			int a                     = 50;
-			int b                     = 11;
-			int c                     = 50;
-			int d                     = 50;
-			double expected__         = 369.8865999182022;
+			String field              = "RRBRRWRRBRRW";
+			int r                     = 8;
+			double expected__         = 0.9696969696969697;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}
 
 		// custom cases
 
 /*      case 5: {
-			int a                     = ;
-			int b                     = ;
-			int c                     = ;
-			int d                     = ;
+			String field              = ;
+			int r                     = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}*/
 /*      case 6: {
-			int a                     = ;
-			int b                     = ;
-			int c                     = ;
-			int d                     = ;
+			String field              = ;
+			int r                     = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}*/
 /*      case 7: {
-			int a                     = ;
-			int b                     = ;
-			int c                     = ;
-			int d                     = ;
+			String field              = ;
+			int r                     = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FixedDiceGameDiv1().getExpectation(a, b, c, d));
+			return verifyCase(casenum__, expected__, new RabbitStepping().getExpected(field, r));
 		}*/
 		default:
 			return -1;

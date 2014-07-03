@@ -1,5 +1,5 @@
 package HackerRank.weekly_2014july.CosecSubSeq;
-//for small test case solution: n^2
+//O(N + K)
 import java.util.*;
 import java.io.*;
 public class Solution implements Runnable {
@@ -13,10 +13,13 @@ public class Solution implements Runnable {
                     long[] sum = new long[N+1];
                     for(int i = 1; i <= N; i++) sum[i] = sum[i-1] + a[i-1];
                     
+                    int[] cnt = new int[K];
+                    for(int i = 0; i <= N; i++) cnt[(int)(sum[i] % K)]++;
+                    
                     long answer = 0;
-                    for(int s = 1; s <= N; s++)
-                        for(int e = s; e <= N; e++)
-                            if((sum[e] - sum[s - 1]) % K == 0) answer++;
+                    for(int i = 0; i < K; i++){
+                        answer += (cnt[i] * (long)(cnt[i] - 1)) / 2;
+                    }
                     
                     
                     System.out.println(answer);
